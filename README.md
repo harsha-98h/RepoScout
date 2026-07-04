@@ -70,3 +70,4 @@ RepoScout follows the **ReAct** pattern:
 ## 📜 License
 Distributed under the MIT License. See `LICENSE` for more information.
 # RepoScout
+# RepoScout
