@@ -52,7 +52,20 @@ class ErrorDetector:
                 "retry": False,
             }
 
-            if status_code == 403:
+            if status_code == 401:
+                error_info.update(
+                    {
+                        "type": "UNAUTHORIZED",
+                        "retry": False,
+                        "message": (
+                            "GitHub API returned 401 Bad Credentials. "
+                            "Your GITHUB_TOKEN is invalid or expired. "
+                            "Update it in .env or remove it to use unauthenticated access."
+                        ),
+                    }
+                )
+
+            elif status_code == 403:
                 remaining = response.headers.get("X-RateLimit-Remaining", "1")
                 if remaining == "0":
                     error_info.update(
@@ -70,6 +83,7 @@ class ErrorDetector:
                     error_info.update(
                         {
                             "type": "FORBIDDEN",
+                            "retry": False,
                             "message": "Access forbidden. Check authentication.",
                         }
                     )
