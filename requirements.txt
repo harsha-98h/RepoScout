@@ -1,8 +1,11 @@
 # Core AI / API
 openai>=2.0.0
 
-# Web framework
-streamlit>=1.55.0
+# Web UI
+streamlit>=1.35.0
+
+# Terminal UI
+rich>=13.0.0
 
 # HTTP
 requests>=2.31.0

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reposcout-deployment
+  labels:
+    app: reposcout
+spec:
+  replicas: 2 # Run two copies of the app for reliability
+  selector:
+    matchLabels:
+      app: reposcout
+  template:
+    metadata:
+      labels:
+        app: reposcout
+    spec:
+      containers:
+      - name: reposcout-container
+        # UPDATE THIS LINE WITH YOUR ECR IMAGE URL LATER
+        image: REPLACE_ME_WITH_YOUR_ECR_IMAGE_URL
+        ports:
+        - containerPort: 8501
+        env:
+        # We define the environment variables here.
+        # In a real production environment, you would use Kubernetes Secrets instead of plain text here.
+        - name: OPENAI_API_KEY
+          value: "REPLACE_WITH_YOUR_OPENAI_KEY"
+        - name: GITHUB_TOKEN
+          value: "REPLACE_WITH_YOUR_GITHUB_TOKEN"
+        - name: DEBUG
+          value: "False"

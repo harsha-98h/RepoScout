@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: reposcout-service
+spec:
+  # This creates an AWS Load Balancer automatically so people on the internet can access the app
+  type: LoadBalancer
+  selector:
+    app: reposcout
+  ports:
+    - protocol: TCP
+      port: 80 # The port the load balancer listens on (standard HTTP)
+      targetPort: 8501 # The port the Streamlit app runs on inside the container

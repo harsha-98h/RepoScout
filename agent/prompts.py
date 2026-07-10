@@ -37,7 +37,7 @@ FINAL ANSWER: [Your formatted response with repositories]
 
    💻 Language: [Language]
 
-   🔗 GitHub: [Repo Name](URL)
+   🔗 Link: [URL]
 
    Why useful: [Detailed explanation]
 
@@ -63,7 +63,7 @@ Here are the top repositories for building AI agents:
 
 💻 Language: Python
 
-🔗 GitHub: [AutoGPT](https://github.com/Significant-Gravitas/AutoGPT)
+🔗 Link: https://github.com/Significant-Gravitas/AutoGPT
 
 Why useful: Pioneering autonomous AI agent with massive community support.
 
@@ -75,7 +75,7 @@ Why useful: Pioneering autonomous AI agent with massive community support.
 
 💻 Language: Python
 
-🔗 GitHub: [LangChain](https://github.com/langchain-ai/langchain)
+🔗 Link: https://github.com/langchain-ai/langchain
 
 Why useful: The industry standard for building context-aware AI applications.
 

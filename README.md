@@ -1,73 +1,94 @@
 # 🔍 RepoScout — AI-Powered GitHub Discovery Agent
 
-RepoScout is an intelligent repository search agent that uses the **ReAct (Reasoning and Acting)** pattern to discover, evaluate, and detail GitHub repositories. It features a premium, web-based UI built with Streamlit.
-
-![RepoScout UI Preview](https://github.com/user-attachments/assets/your-screenshot-id)
+RepoScout is an intelligent repository search agent that uses the **ReAct (Reasoning and Acting)** pattern to discover, evaluate, and detail GitHub repositories. It features both a **Streamlit web UI** and a rich **CLI**.
 
 ## ✨ Features
 
 *   **ReAct Agentic Logic**: Uses an LLM to reason through search results and decide follow-up actions (reading READMEs, commits, or issues).
 *   **Intelligent evaluation**: Automatically filters and scores repositories based on activity, stars, and description quality.
-*   **Premium UI**: Built with Streamlit, featuring a dark neon glassmorphism aesthetic with animated hero sections and live session stats.
-*   **Double-Search Architecture**: Optimized to fetch ample results to ensure quality filters return exactly the count you requested.
-*   **Advanced Tools**: The agent can read repository READMEs, analyze recent commit history, and check open issues/PRs to provide expert advice.
+*   **Premium Streamlit UI**: Dark neon glassmorphism aesthetic with live reasoning trace, animated hero, and repo cards.
+*   **Rich CLI**: Full-featured terminal REPL with `rich` formatting.
+*   **Double-Search Architecture**: Fetches 2× the requested results, then filters for quality.
+*   **Advanced Tools**: Read READMEs, analyze recent commits, check open issues/PRs.
+*   **Security**: Prompt injection detection, environment-based secrets.
+*   **Production-Ready**: Docker + AWS App Runner deployment included.
 
 ## 🚀 Quick Start
 
 ### 1. Prerequisites
 *   Python 3.11+
 *   OpenAI API Key
-*   GitHub Personal Access Token (Optional but recommended to avoid rate limits)
+*   GitHub Personal Access Token (optional but recommended)
 
 ### 2. Installation
 ```bash
-# Clone the repository
 git clone https://github.com/yourusername/reposcout.git
 cd reposcout
 
-# Create and activate a virtual environment
 python -m venv .venv
-source .venv/bin/activate  # On Windows use `.venv\Scripts\activate`
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
 
-# Install dependencies
 pip install -r requirements.txt
-pip install streamlit
 ```
 
 ### 3. Configuration
-Copy the template and add your keys:
 ```bash
 cp .env.example .env
+# Edit .env and fill in OPENAI_API_KEY and GITHUB_TOKEN
 ```
-Edit `.env` and add:
-*   `OPENAI_API_KEY`: Your OpenAI key.
-*   `GITHUB_TOKEN`: Your GitHub token.
 
-### 4. Run the App
+### 4. Run — Web UI (Streamlit)
 ```bash
 streamlit run app.py
+# Open http://localhost:8501
 ```
-Or run the CLI version:
+
+### 5. Run — CLI
 ```bash
-python main.py
+python main.py              # interactive REPL
+python main.py "Find 5 Python AI agents"  # one-shot
 ```
 
 ## 🧠 How it Works
 
 RepoScout follows the **ReAct** pattern:
-1.  **Thought**: Analyzes the user request (e.g., "Find 5 Python AI agents").
-2.  **Action**: Searches GitHub using the `search_github` tool.
-3.  **Observation**: Filters results for quality and presents them.
-4.  **Thought**: Decides if it needs to dig deeper into a specific repo.
-5.  **Final Answer**: Presents the best curated list to the user.
+1.  **Thought**: Analyses the user request.
+2.  **Action**: Calls a tool (e.g., `search_github`, `read_readme`, `analyze_commits`).
+3.  **Observation**: Processes the tool result.
+4.  **Final Answer**: Presents the best curated repositories.
+
+## 🐳 Docker
+
+```bash
+docker build -t reposcout .
+docker run -p 8501:8501 \
+  -e OPENAI_API_KEY="sk-..." \
+  -e GITHUB_TOKEN="ghp_..." \
+  reposcout
+```
+
+## ☁️ AWS Deployment
+
+See **[deploy/DEPLOY.md](deploy/DEPLOY.md)** for full step-by-step instructions.
+
+**Recommended: AWS App Runner** (fully managed, auto-HTTPS, ~$5–12/month)
+
+```bash
+# Build → push to Amazon ECR → deploy on App Runner
+# Environment variables are set in App Runner console (never in files)
+```
 
 ## 🛡️ Security
 
-*   **Prompt Sanitization**: Includes logic to detect and block prompt injection attempts.
-*   **Environment Protection**: Securely loads keys via `python-dotenv`.
-*   **Filtering**: Ensures only active and high-quality repositories reach the final output.
+*   Prompt sanitization blocks injection attempts.
+*   Secrets loaded via environment variables only (never committed).
+*   `.dockerignore` ensures `.env` is never baked into Docker images.
+
+## 🧪 Tests
+
+```bash
+pytest tests/ -v   # 62 tests, all passing
+```
 
 ## 📜 License
-Distributed under the MIT License. See `LICENSE` for more information.
-# RepoScout
-# RepoScout
+MIT License.
